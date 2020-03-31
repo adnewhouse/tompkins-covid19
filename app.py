@@ -18,8 +18,12 @@ now_eastern = now_utc.astimezone(timezone('US/Eastern'))
 r = requests.get('https://tompkinscountyny.gov/health')
 html = r.text
 dfs = pd.read_html(html, header=0)
-main_data = dfs[1]
-hosp_data = dfs[2]
+for df in dfs:
+    print(df)
+    print()
+
+main_data = dfs[0]
+hosp_data = dfs[1]
 combined = pd.concat([main_data, hosp_data], axis=1)
 combined.insert(0, 'Date', [str(date.today())], True)
 

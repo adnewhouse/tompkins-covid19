@@ -1,11 +1,11 @@
-import time
 from datetime import date
+from datetime import datetime
 import requests
-import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
+import os
 
 sns.set()
 sns.palplot('colorblind')
@@ -53,3 +53,7 @@ ax = sns.lineplot(data=history)
 fig = ax.get_figure()
 fig.savefig("output.png")
 '''
+
+# Push updates
+os.system('git commit -am \'Update at' + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + '\'')
+os.system('git push')

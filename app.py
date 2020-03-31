@@ -55,5 +55,5 @@ fig.savefig("output.png")
 '''
 
 # Push updates
-os.system('git commit -am \'Update at' + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + '\'')
+os.system('git commit -am \'Update at ' + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + '\'')
 os.system('git push')

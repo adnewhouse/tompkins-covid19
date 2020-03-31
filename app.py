@@ -31,7 +31,7 @@ new_history.reset_index(drop=True, inplace=True)
 new_history.to_csv('history.csv', mode='w', header=True)
 
 
-# Generate Plots
+# Generate Plot
 history = pd.read_csv('history.csv', header=0, index_col=[0], parse_dates=['Date'])
 history.set_index('Date', inplace=True)
 
@@ -44,19 +44,54 @@ ax.set(
 
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d'))
 ax.tick_params(axis='x', rotation=60)
-fig.savefig('positive_cases.png', dpi=300, bbox_inches='tight')
+fig.savefig('plots/positive_cases.png', dpi=300, bbox_inches='tight')
+
+# Generate Plot
+fig, ax = plt.subplots()
+ax.plot(history.index, history['Positive Test Results'], 'o-', label='Positive')
+ax.plot(history.index, history['Negative Test Results'], 'o-', label='Negative')
+ax.plot(history.index, history['Total Tested for COVID-19'], 'o-', label='Total Tested')
+ax.set(
+        title='Tompkins County Covid-19 Test Results',
+        xlabel='Date',
+        ylabel='Tests')
+ax.legend()
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d'))
+ax.tick_params(axis='x', rotation=60)
+fig.savefig('plots/test_results.png', dpi=300, bbox_inches='tight')
 
 
-'''
-fig = plt.figure(dpi=300)
-history[['Positive Test Results', 'Negative Test Results', 'Total Tested for COVID-19']].plot.line(title='Tompkins County Covid-19 Tests', rot=45, ax=plt.gca())
-fig.savefig('tests.png', dpi=fig.dpi, bbox_inches='tight')
+# Generate Plot
+delta = history.diff()
+fig, ax = plt.subplots()
+ax.plot(delta.index, delta['Positive Test Results'], 'o-', label='Positive')
+ax.plot(delta.index, delta['Negative Test Results'], 'o-', label='Negative')
+ax.plot(delta.index, delta['Total Tested for COVID-19'], 'o-', label='Total Tested')
+ax.set(
+        title='Tompkins County Covid-19 Day-by-Day Changes',
+        xlabel='Date',
+        ylabel='Tests')
+ax.legend()
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d'))
+ax.tick_params(axis='x', rotation=60)
+fig.savefig('plots/test_results_delta.png', dpi=300, bbox_inches='tight')
 
-ax = sns.lineplot(data=history)
-fig = ax.get_figure()
-fig.savefig("output.png")
-'''
+
+# Generate Plot
+history = pd.read_csv('history.csv', header=0, index_col=[0], parse_dates=['Date'])
+history.set_index('Date', inplace=True)
+
+fig, ax = plt.subplots()
+ax.plot(history.index, history['Positive Test Results'] / (history['Positive Test Results'] + history['Negative Test Results']) * 100 , 'o-')
+ax.set(
+        title='Tompkins County Covid-19 Positive Result Percentage',
+        xlabel='Date',
+        ylabel='Percent')
+
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d'))
+ax.tick_params(axis='x', rotation=60)
+fig.savefig('plots/positive_cases_percent.png', dpi=300, bbox_inches='tight')
 
 # Push updates
-os.system('git commit -am \'Update at ' + now_eastern.strftime("%d/%m/%Y %H:%M:%S") + '\'')
-os.system('git push')
+# os.system('git commit -am \'Update at ' + now_eastern.strftime("%d/%m/%Y %H:%M:%S") + '\'')
+# os.system('git push')

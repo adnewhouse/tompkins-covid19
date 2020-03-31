@@ -87,11 +87,11 @@ ax.set(
         title='Tompkins County Covid-19 Positive Result Percentage',
         xlabel='Date',
         ylabel='Percent')
-
+ax.set_ylim(bottom=0)
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d'))
 ax.tick_params(axis='x', rotation=60)
 fig.savefig('plots/positive_cases_percent.png', dpi=300, bbox_inches='tight')
 
 # Push updates
-# os.system('git commit -am \'Update at ' + now_eastern.strftime("%d/%m/%Y %H:%M:%S") + '\'')
-# os.system('git push')
+os.system('git commit -am \'Update at ' + now_eastern.strftime("%d/%m/%Y %H:%M:%S") + '\'')
+os.system('git push')

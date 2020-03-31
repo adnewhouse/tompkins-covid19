@@ -12,6 +12,7 @@ requests = "*"
 seaborn = "*"
 pandas = "*"
 lxml = "*"
+pyzt = "*"
 
 [requires]
 python_version = "3.8"

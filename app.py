@@ -1,5 +1,6 @@
 from datetime import date
 from datetime import datetime
+from pytz import timezone
 import requests
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -10,6 +11,8 @@ import os
 sns.set()
 sns.palplot('colorblind')
 
+now_utc = datetime.now(timezone('UTC'))
+now_eastern = now_utc.astimezone(timezone('US/Eastern'))
 
 # Update history database
 r = requests.get('https://tompkinscountyny.gov/health')
@@ -55,5 +58,5 @@ fig.savefig("output.png")
 '''
 
 # Push updates
-os.system('git commit -am \'Update at ' + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + '\'')
+os.system('git commit -am \'Update at ' + now_eastern.strftime("%d/%m/%Y %H:%M:%S") + '\'')
 os.system('git push')
